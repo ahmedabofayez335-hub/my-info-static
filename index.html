@@ -1,0 +1,26 @@
+<!doctype html><html><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Loading…</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Sans+Arabic:wght@400;500&family=JetBrains+Mono&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css"><script src="config.js"></script></head>
+<body><div class="bg"></div><main id="m"></main><footer id="f"></footer>
+<script>
+const c=window.SITE||{},$=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const url=u=>/^(https?:\/\/|mailto:|tel:)/i.test(u)?u:'https://'+u;
+document.documentElement.lang=c.lang||'en';document.documentElement.dir=c.dir==='rtl'?'rtl':'ltr';
+document.title=c.name||'Me';
+const init=(c.name||'?').trim().split(/\s+/).map(w=>w[0]).slice(0,2).join('').toUpperCase();
+const cards=[];
+if(c.email)cards.push(['Email',c.email,'mailto:'+c.email]);
+if(c.phone)cards.push(['Phone',c.phone,'tel:'+c.phone.replace(/[^\d+]/g,'')]);
+if(c.whatsapp)cards.push(['WhatsApp',c.whatsapp,'https://wa.me/'+c.whatsapp.replace(/\D/g,'')]);
+if(c.location)cards.push(['Location',c.location,'']);
+const card=([l,v,h])=>{const t=h?`a href="${$(h)}"`:'div';return `<${t} class="card"><span class="lbl">${l}</span><span class="val">${$(v)}</span></${h?'a':'div'}>`};
+const links=c.links||[];
+document.getElementById('m').innerHTML=
+`<div class="avatar">${c.photo?`<img src="${$(c.photo)}" alt="" onerror="this.outerHTML='<span>${$(init)}</span>'">`:`<span>${$(init)}</span>`}</div>
+<p class="eyebrow">${$(c.title)}</p><h1>${$(c.name)}</h1><p class="bio">${$(c.bio)}</p>
+${cards.length?`<section class="grid">${cards.map(card).join('')}</section>`:''}
+${links.length?`<nav class="links">${links.map(l=>`<a class="pill" href="${$(url(l.url))}" target="_blank" rel="noopener">${$(l.label||l.url)} ↗</a>`).join('')}</nav>`:''}`;
+document.getElementById('f').textContent=c.footer||'';
+</script></body></html>
